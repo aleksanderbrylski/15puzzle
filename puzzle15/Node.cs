@@ -5,7 +5,7 @@ namespace puzzle15
 {
     public class Node
     {
-        private int _x = 0;
+        private int _zeroIndex = 0;
         private const int NumberOfColumns = 4;
 
         public List<Node> Children { get; set; } = new List<Node>();
@@ -85,14 +85,14 @@ namespace puzzle15
             {
                 if (Puzzle[i] == 0)
                 {
-                    _x = i;
+                    _zeroIndex = i;
                     break;
                 }
             }
-            MoveLeft(Puzzle, _x);
-            MoveRight(Puzzle, _x);
-            MoveDown(Puzzle, _x);
-            MoveUp(Puzzle, _x);
+            MoveLeft(Puzzle, _zeroIndex);
+            MoveRight(Puzzle, _zeroIndex);
+            MoveDown(Puzzle, _zeroIndex);
+            MoveUp(Puzzle, _zeroIndex);
         }
         
         //MOVES
