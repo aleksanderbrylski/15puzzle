@@ -3,64 +3,60 @@ using System.Collections.Generic;
 
 namespace puzzle15
 {
-    public class BFS
+    public class Bfs
     {
-        public BFS()
-        {
-            
-        }
+        private readonly List<Node> _openList = new List<Node>(); //nodes that were not visited yet
+        private readonly List<Node> _closedList = new List<Node>(); //nodes that were visited
+        private readonly List<Node> _pathToSolution  = new List<Node>();
+        public Bfs() { }
 
         public List<Node> BreathFirstSearch(Node root)
         {
-            List<Node> pathToSolution  = new List<Node>();
-            List<Node> openList = new List<Node>(); //nodes that were not visited yet
-            List<Node> closedList = new List<Node>(); //nodes that were visited
-            
-            openList.Add((root));
+            _openList.Add((root));
             bool isSolved = false;
 
-            while (openList.Count > 0 && !isSolved)
+            while (_openList.Count > 0 && !isSolved)
             {
                 //current node is first node from open list
                 //it is added to closed list and removed from open list
-                Node currentNode = openList[0];
-                closedList.Add(currentNode);
-                openList.RemoveAt(0);
+                Node currentNode = _openList[0];
+                _closedList.Add(currentNode);
+                _openList.RemoveAt(0);
                 
                 currentNode.ExpandMove();
+                //jakbyś chciał sobie zobaczyć poszczególne ruchy, chociaz i tak nic nie widac bo nie wiadomo ktory po ktorym jest xd
                 //currentNode.PrintPuzzle();
                 
-                for (int i = 0; i < currentNode.children.Count; i++)
+                foreach (var currentChild in currentNode.Children)
                 {
-                    Node currentChild = currentNode.children[i];
                     if (currentChild.IsSolved())
                     {
                         Console.WriteLine("Success ;)");
                         isSolved = true;
                         
                         //trace path to root node
-                        PathTrace(pathToSolution, currentChild);
+                        PathTrace(_pathToSolution, currentChild);
                     }
                     
                     //Checks if openList or closed list contains currentChild
-                    if (!Contains(openList, currentChild) && !Contains(closedList, currentChild))
+                    if (!Contains(_openList, currentChild) && !Contains(_closedList, currentChild))
                     {
-                        openList.Add(currentChild);
+                        _openList.Add(currentChild);
                     }
                 }
                 
             }
 
-            return pathToSolution;
+            return _pathToSolution;
         }
 
-        public static bool Contains(List<Node> list, Node n)
+        private static bool Contains(List<Node> list, Node n)
         {
             bool contains = false;
 
-            for (int i = 0; i < list.Count; i++)
+            foreach (var t in list)
             {
-                if (list[i].IsIdentical(n.puzzle))
+                if (t.IsIdentical(n.Puzzle))
                 {
                     contains = true;
                 }
@@ -69,15 +65,15 @@ namespace puzzle15
             return contains;
         }
 
-        public void PathTrace(List<Node> path, Node n)
+        private void PathTrace(List<Node> path, Node n)
         {
-            Console.WriteLine("Path...");
+            Console.WriteLine("Path: ");
             Node current = n;
             path.Add(current);
 
-            while (current.parent != null)
+            while (current.Parent != null)
             {
-                current = current.parent;
+                current = current.Parent;
                 path.Add(current);
             }
         }
