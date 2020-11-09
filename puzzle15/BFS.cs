@@ -24,7 +24,7 @@ namespace puzzle15
                 _openList.RemoveAt(0);
                 
                 currentNode.ExpandMove();
-                //jakbyś chciał sobie zobaczyć poszczególne ruchy, chociaz i tak nic nie widac bo nie wiadomo ktory po ktorym jest xd
+                //jakbyś chciał sobie zobaczyć poszczególne ruchy, chociaz i tak nic nie widac bo nie wiadomo ktory po ktorym jest xd Edit: XD dobry feature XD
                 //currentNode.PrintPuzzle();
                 
                 foreach (var currentChild in currentNode.Children)

@@ -20,16 +20,18 @@ namespace puzzle15
             //3 moves
             int[] puzzle3 =
             {
-                4, 1, 2, 3,
-                8, 5, 6, 7,
-                12, 9, 10, 11,
+                1, 2, 3, 4,
+                5, 6, 7, 8,
+                9, 10, 11, 12,
                 0, 13, 14, 15
             };
             
-            Node root = new Node(puzzle13);
+            Node root = new Node(puzzle3);
             Bfs bfs = new Bfs();
+            Dfs dfs = new Dfs();
 
-            List<Node> solution = bfs.BreathFirstSearch(root);
+            //List<Node> solution = bfs.BreathFirstSearch(root);
+            List<Node> solution = dfs.DepthFirstSearch(root);
 
             if (solution.Count > 0)
             {

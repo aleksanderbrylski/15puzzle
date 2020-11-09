@@ -17,6 +17,7 @@ namespace puzzle15
         public Node(int[] puzzle)
         {
             SetPuzzle(puzzle);
+            _zeroIndex = FindZeroIndex();
         }
 
         private void SetPuzzle(int[] puzzle)
@@ -27,10 +28,25 @@ namespace puzzle15
             }
         }
 
+        public int FindZeroIndex()
+        {
+            int tempIndex = 0;
+            for (int i = 0; i < Puzzle.Length; i++)
+            {
+                if (Puzzle[i] == 0)
+                {
+                    tempIndex = i;
+                    break;
+                }
+            }
+
+            return tempIndex;
+        }
+
         //Checks if the puzzle is solved
         public bool IsSolved()
         {
-            int m = Puzzle[0];
+            /*int m = Puzzle[0];
 
             for (int i = 1; i < Puzzle.Length; i++)
             {
@@ -39,6 +55,14 @@ namespace puzzle15
                     return false;
                 }
                 m = Puzzle[i];
+            }
+            return true;*/
+            for (int i = 0; i < Puzzle.Length; i++)
+            {
+                if ((i + 1) % 16 != Puzzle[i])
+                {
+                    return false;
+                }
             }
             return true;
         }
@@ -81,28 +105,22 @@ namespace puzzle15
 
         public void ExpandMove()
         {
-            for (int i = 0; i < Puzzle.Length; i++)
-            {
-                if (Puzzle[i] == 0)
-                {
-                    _zeroIndex = i;
-                    break;
-                }
-            }
-            MoveLeft(Puzzle, _zeroIndex);
-            MoveRight(Puzzle, _zeroIndex);
-            MoveDown(Puzzle, _zeroIndex);
-            MoveUp(Puzzle, _zeroIndex);
+            MoveLeft();
+            MoveRight();
+            MoveDown();
+            MoveUp();
         }
         
         //MOVES
-        private void MoveRight(int[] p, int i)
+        public bool MoveRight()
         {
             //Checks if we can move to the right
-            if (i % NumberOfColumns >= NumberOfColumns - 1) return;
+            int i = _zeroIndex;
+            if (i % NumberOfColumns >= NumberOfColumns - 1) return false;
             //Create a copy of the puzzle so as not to operate on the original puzzle
+            //Console.Write("In MoveRight");
             int[] puzzleCopy = new int [16];
-            CopyPuzzle(puzzleCopy, p);
+            CopyPuzzle(puzzleCopy, Puzzle);
 
             //Move to right in CopyPuzzle
             int temp = puzzleCopy[i + 1];
@@ -112,15 +130,17 @@ namespace puzzle15
             Node child = new Node(puzzleCopy);
             Children.Add(child);
             child.Parent = this;
+            return true;
         }
         
-        private void MoveLeft(int[] p, int i)
+        public bool MoveLeft()
         {
+            int i = _zeroIndex;
             //Checks if we can move to the left
-            if (i % NumberOfColumns <= 0) return;
+            if (i % NumberOfColumns <= 0) return false;
             //Create a copy of the puzzle so as not to operate on the original puzzle
             int[] puzzleCopy = new int [16];
-            CopyPuzzle(puzzleCopy, p);
+            CopyPuzzle(puzzleCopy, Puzzle);
 
             //Move to left in CopyPuzzle
             int temp = puzzleCopy[i - 1];
@@ -130,15 +150,17 @@ namespace puzzle15
             Node child = new Node(puzzleCopy);
             Children.Add(child);
             child.Parent = this;
+            return true;
         }
         
-        private void MoveDown(int[] p, int i)
+        public bool MoveDown()
         {
+            int i = _zeroIndex;
             //Checks if we can move down
-            if (i + NumberOfColumns >= Puzzle.Length) return;
+            if (i + NumberOfColumns >= Puzzle.Length) return false;
             //Create a copy of the puzzle so as not to operate on the original puzzle
             int[] puzzleCopy = new int [16];
-            CopyPuzzle(puzzleCopy, p);
+            CopyPuzzle(puzzleCopy, Puzzle);
 
             //Move down in CopyPuzzle
             int temp = puzzleCopy[i + 4];
@@ -148,15 +170,17 @@ namespace puzzle15
             Node child = new Node(puzzleCopy);
             Children.Add(child);
             child.Parent = this;
+            return true;
         }
         
-        private void MoveUp(int[] p, int i)
+        public bool MoveUp()
         {
+            int i = _zeroIndex;
             //Checks if we can move up
-            if (i - NumberOfColumns < 0) return;
+            if (i - NumberOfColumns < 0) return false;
             //Create a copy of the puzzle so as not to operate on the original puzzle
             int[] puzzleCopy = new int [16];
-            CopyPuzzle(puzzleCopy, p);
+            CopyPuzzle(puzzleCopy, Puzzle);
 
             //Move up in CopyPuzzle
             int temp = puzzleCopy[i - 4];
@@ -166,6 +190,7 @@ namespace puzzle15
             Node child = new Node(puzzleCopy);
             Children.Add(child);
             child.Parent = this;
+            return true;
         }
     }
 }
