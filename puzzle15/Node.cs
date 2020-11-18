@@ -116,6 +116,7 @@ namespace puzzle15
         {
             //Checks if we can move to the right
             int i = _zeroIndex;
+            //Console.Write("Zero index: "+_zeroIndex);
             if (i % NumberOfColumns >= NumberOfColumns - 1) return false;
             //Create a copy of the puzzle so as not to operate on the original puzzle
             //Console.Write("In MoveRight");
@@ -126,7 +127,7 @@ namespace puzzle15
             int temp = puzzleCopy[i + 1];
             puzzleCopy[i + 1] = puzzleCopy[i];
             puzzleCopy[i] = temp;
-                
+
             Node child = new Node(puzzleCopy);
             Children.Add(child);
             child.Parent = this;
@@ -172,7 +173,7 @@ namespace puzzle15
             child.Parent = this;
             return true;
         }
-        
+
         public bool MoveUp()
         {
             int i = _zeroIndex;
@@ -186,11 +187,12 @@ namespace puzzle15
             int temp = puzzleCopy[i - 4];
             puzzleCopy[i - 4] = puzzleCopy[i];
             puzzleCopy[i] = temp;
-                
+
             Node child = new Node(puzzleCopy);
             Children.Add(child);
             child.Parent = this;
             return true;
         }
+
     }
 }

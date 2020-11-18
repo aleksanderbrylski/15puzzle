@@ -27,39 +27,52 @@ namespace puzzle15
         {
             int childrenCounter = 0;
             bool foundSolved = false;
-            currentNode.PrintPuzzle();
-            //Console.Write(childrenCounter);
             if (currentNode.IsSolved())
             {
                 _pathToSolution.Add(currentNode);
-                Console.Write("jebać pis");
                 return true;
             }
             _visitedNodes.Add(currentNode);
 
-            if (!foundSolved && currentNode.MoveLeft() && !Contains(_visitedNodes, currentNode.Children[childrenCounter]))
+            if (!foundSolved && currentNode.MoveRight())
             {
-                foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
+                if (!Contains(_visitedNodes, currentNode.Children[childrenCounter]))
+                {
+                    foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
+                }
+
                 childrenCounter++;
             }
-            if (!foundSolved && currentNode.MoveRight() && !Contains(_visitedNodes, currentNode.Children[childrenCounter]))
+            if (!foundSolved && currentNode.MoveDown())
             {
-                //currentNode.Children[childrenCounter].PrintPuzzle();
-                Console.Write("in right");
-                foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
+                if (!Contains(_visitedNodes, currentNode.Children[childrenCounter]))
+                {
+                    foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
+                }
+
                 childrenCounter++;
             }
-            if (!foundSolved && currentNode.MoveUp() && !Contains(_visitedNodes, currentNode.Children[childrenCounter]))
+
+            if (!foundSolved && currentNode.MoveLeft())
             {
-                Console.Write("in up");
-                foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
+                if (!Contains(_visitedNodes, currentNode.Children[childrenCounter]))
+                {
+                    foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
+                }
+
                 childrenCounter++;
             }
-            if (!foundSolved && currentNode.MoveDown() && !Contains(_visitedNodes, currentNode.Children[childrenCounter]))
+            
+            if (!foundSolved && currentNode.MoveUp())
             {
-                foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
+                if (!Contains(_visitedNodes, currentNode.Children[childrenCounter]))
+                {
+                    foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
+                }
+
                 childrenCounter++;
             }
+            
 
             if (foundSolved)
             {

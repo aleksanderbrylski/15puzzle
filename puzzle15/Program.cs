@@ -16,6 +16,15 @@ namespace puzzle15
                 12, 14, 11, 10
             };
             
+            //4 moves
+            int[] puzzle4 =
+            {
+                1, 2, 3, 4,
+                5, 6, 7, 8,
+                0, 10, 11, 12,
+                9, 13, 14, 15
+            };
+            
        
             //3 moves
             int[] puzzle3 =
@@ -26,7 +35,7 @@ namespace puzzle15
                 0, 13, 14, 15
             };
             
-            Node root = new Node(puzzle3);
+            Node root = new Node(puzzle4);
             Bfs bfs = new Bfs();
             Dfs dfs = new Dfs();
 
