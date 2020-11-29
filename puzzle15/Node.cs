@@ -1,12 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace puzzle15
 {
     public class Node
     {
-        private int _zeroIndex = 0;
+        private readonly int _zeroIndex = 0;
         private const int NumberOfColumns = 4;
+
+        private bool _isInfomed = false;
+        
+        public int F { get; set; }
+
+        private int Depth { get; set; }
 
         public List<Node> Children { get; set; } = new List<Node>();
 
@@ -14,10 +21,21 @@ namespace puzzle15
 
         public int[] Puzzle { get; set; } = new int[16];
 
+        //Constructor for DFS and BFS
         public Node(int[] puzzle)
         {
             SetPuzzle(puzzle);
             _zeroIndex = FindZeroIndex();
+        }
+
+        //Constructor for Astar
+        public Node(int[] puzzle, int depth)
+        {
+            SetPuzzle(puzzle);
+            _zeroIndex = FindZeroIndex();
+            Depth = depth;
+            F = CalculateF();
+            _isInfomed = true;
         }
 
         private void SetPuzzle(int[] puzzle)
@@ -28,7 +46,7 @@ namespace puzzle15
             }
         }
 
-        public int FindZeroIndex()
+        private int FindZeroIndex()
         {
             int tempIndex = 0;
             for (int i = 0; i < Puzzle.Length; i++)
@@ -46,17 +64,6 @@ namespace puzzle15
         //Checks if the puzzle is solved
         public bool IsSolved()
         {
-            /*int m = Puzzle[0];
-
-            for (int i = 1; i < Puzzle.Length; i++)
-            {
-                if (m > Puzzle[i])
-                {
-                    return false;
-                }
-                m = Puzzle[i];
-            }
-            return true;*/
             for (int i = 0; i < Puzzle.Length; i++)
             {
                 if ((i + 1) % 16 != Puzzle[i])
@@ -128,9 +135,7 @@ namespace puzzle15
             puzzleCopy[i + 1] = puzzleCopy[i];
             puzzleCopy[i] = temp;
 
-            Node child = new Node(puzzleCopy);
-            Children.Add(child);
-            child.Parent = this;
+            AddChildren(puzzleCopy);
             return true;
         }
         
@@ -148,9 +153,7 @@ namespace puzzle15
             puzzleCopy[i - 1] = puzzleCopy[i];
             puzzleCopy[i] = temp;
                 
-            Node child = new Node(puzzleCopy);
-            Children.Add(child);
-            child.Parent = this;
+            AddChildren(puzzleCopy);
             return true;
         }
         
@@ -168,9 +171,7 @@ namespace puzzle15
             puzzleCopy[i + 4] = puzzleCopy[i];
             puzzleCopy[i] = temp;
                 
-            Node child = new Node(puzzleCopy);
-            Children.Add(child);
-            child.Parent = this;
+            AddChildren(puzzleCopy);
             return true;
         }
 
@@ -188,11 +189,44 @@ namespace puzzle15
             puzzleCopy[i - 4] = puzzleCopy[i];
             puzzleCopy[i] = temp;
 
-            Node child = new Node(puzzleCopy);
-            Children.Add(child);
-            child.Parent = this;
+            AddChildren(puzzleCopy);
             return true;
         }
 
+
+        private int CalculateF()
+        {
+            int value = 0;
+            if (IsSolved())
+            {
+                return value;
+            }
+
+            for (int i = 0; i < Puzzle.Length; i++)
+            {
+                if ((i + 1) % 16 != Puzzle[i])
+                {
+                    value++;
+                }
+            }
+            return value + Depth;
+        }
+
+        public void AddChildren(int [] puzzleCopy)
+        {
+            if (_isInfomed)
+            {
+                Node child = new Node(puzzleCopy, Depth);
+                Children.Add(child);
+                child.Parent = this;
+            }
+            else
+            {
+                Node child = new Node(puzzleCopy);
+                Children.Add(child);
+                child.Parent = this;
+            }
+        }
+        
     }
 }

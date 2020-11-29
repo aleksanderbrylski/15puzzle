@@ -7,15 +7,7 @@ namespace puzzle15
     {
         static void Main(string[] args)
         {
-            //13 moves
-            int[] puzzle13 =
-            {
-                4, 1, 0, 3,
-                5, 9, 2, 7,
-                8, 13, 6, 15,
-                12, 14, 11, 10
-            };
-            
+
             //9 moves
             int[] puzzle9 =
             {
@@ -33,6 +25,34 @@ namespace puzzle15
                 10, 6, 12, 15,
                 9, 13, 14, 0
             };
+            
+            //13 moves
+            int[] puzzle13 =
+            {
+                1, 2, 3, 0,
+                5, 7, 11, 4,
+                10, 6, 12, 8,
+                9, 13, 14, 15
+            };
+            
+            //22 moves
+            int[] puzzle22 =
+            {
+                5, 1, 2, 3,
+                10, 7, 11, 4,
+                9, 0, 12, 8,
+                13, 6, 14, 15
+            };
+            
+            //32 moves
+            int[] puzzle32 =
+            {
+                5, 1, 11, 2,
+                10, 7, 14, 3,
+                9, 12, 4, 0,
+                13, 6, 15, 8
+            };
+            
                 
             //8 moves
             int[] puzzle8 =
@@ -62,15 +82,17 @@ namespace puzzle15
                 0, 13, 14, 15
             };
             
-            Node root = new Node(puzzle8);
+            Node root = new Node(puzzle10);
             Bfs bfs = new Bfs();
             Dfs dfs = new Dfs();
             Ids ids = new Ids();
+            Astar astar = new Astar();
+            Node rootStar = new Node(puzzle32, 0);
 
             //List<Node> solution = bfs.BreathFirstSearch(root);
             //List<Node> solution = dfs.DepthFirstSearch(root);
-            List<Node> solution = ids.IterativeDeepingSearch(root, 8);
-
+             // List<Node> solution = ids.IterativeDeepingSearch(root, 15);
+            List<Node> solution = astar.AStar(rootStar);
             if (solution.Count > 0)
             {
                 for(int i = 0; i < solution.Count; i++)
