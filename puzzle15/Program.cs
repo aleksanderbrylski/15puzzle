@@ -103,14 +103,14 @@ namespace puzzle15
             {
                 Node root = new Node(puzzle10);
                 Node rootStar = new Node(puzzle32, 0);
-                 List<Node> solution = new List<Node>();
+                List<Node> solution = new List<Node>();
                 switch (args[0])
                 {
                     case "--bfs":
                         if (args.Length > 1)
-                        {
+                        { 
                             Bfs bfs = new Bfs(args[1]);
-                           solution = bfs.BreathFirstSearch(root); 
+                            solution = bfs.BreathFirstSearch(root); 
                         }
                         
                         break;
@@ -131,7 +131,7 @@ namespace puzzle15
                         break;
                     case "--astar":
                         Astar astar = new Astar();
-                        solution = astar.AStar(root);
+                        solution = astar.AStar(rootStar);
                         break;
                     default:
                         Console.Write("No such option!");
