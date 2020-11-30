@@ -8,7 +8,13 @@ namespace puzzle15
         private readonly List<Node> _openList = new List<Node>(); //nodes that were not visited yet
         private readonly List<Node> _closedList = new List<Node>(); //nodes that were visited
         private readonly List<Node> _pathToSolution  = new List<Node>();
+        private string _order;
         public Bfs() { }
+
+        public Bfs(string order)
+        {
+            this._order = order;
+        }
 
         public List<Node> BreathFirstSearch(Node root)
         {
@@ -23,7 +29,7 @@ namespace puzzle15
                 _closedList.Add(currentNode);
                 _openList.RemoveAt(0);
                 
-                currentNode.ExpandMove();
+                currentNode.ExpandMove(_order);
                 //jakbyś chciał sobie zobaczyć poszczególne ruchy, chociaz i tak nic nie widac bo nie wiadomo ktory po ktorym jest xd Edit: XD dobry feature XD
                 //currentNode.PrintPuzzle();
                 
@@ -46,7 +52,7 @@ namespace puzzle15
                 }
                 
             }
-
+            _pathToSolution.Reverse();
             return _pathToSolution;
         }
 

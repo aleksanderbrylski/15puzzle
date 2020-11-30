@@ -7,8 +7,14 @@ namespace puzzle15
     {
         private List<Node> _visitedNodes = new List<Node>();
         private List<Node> _pathToSolution = new List<Node>();
+        private string _order;
         
         public Dfs() {}
+        
+        public Dfs(string order)
+        {
+            this._order = order;
+        }
 
         public List<Node> DepthFirstSearch(Node root)
         {
@@ -25,7 +31,6 @@ namespace puzzle15
 
         public bool FindFittingNode(Node currentNode)
         {
-            int childrenCounter = 0;
             bool foundSolved = false;
             if (currentNode.IsSolved())
             {
@@ -33,50 +38,18 @@ namespace puzzle15
                 return true;
             }
             _visitedNodes.Add(currentNode);
-
-            if (!foundSolved && currentNode.MoveRight())
+            currentNode.ExpandMove(_order);
+            foreach (Node currentChild in currentNode.Children)
             {
-                if (!Contains(_visitedNodes, currentNode.Children[childrenCounter]))
+                if (!Contains(_visitedNodes, currentChild))
                 {
-                    foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
+                    foundSolved = FindFittingNode(currentChild);
                 }
-
-                childrenCounter++;
-            }
-            if (!foundSolved && currentNode.MoveDown())
-            {
-                if (!Contains(_visitedNodes, currentNode.Children[childrenCounter]))
+                if (foundSolved)
                 {
-                    foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
+                    _pathToSolution.Add(currentNode);
+                    break;
                 }
-
-                childrenCounter++;
-            }
-
-            if (!foundSolved && currentNode.MoveLeft())
-            {
-                if (!Contains(_visitedNodes, currentNode.Children[childrenCounter]))
-                {
-                    foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
-                }
-
-                childrenCounter++;
-            }
-            
-            if (!foundSolved && currentNode.MoveUp())
-            {
-                if (!Contains(_visitedNodes, currentNode.Children[childrenCounter]))
-                {
-                    foundSolved = FindFittingNode(currentNode.Children[childrenCounter]);
-                }
-
-                childrenCounter++;
-            }
-            
-
-            if (foundSolved)
-            {
-                _pathToSolution.Add(currentNode);
             }
 
             return foundSolved;
@@ -96,5 +69,6 @@ namespace puzzle15
 
             return contains;
         }
+        
     }
 }

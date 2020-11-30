@@ -7,9 +7,15 @@ namespace puzzle15
     {
         private List<Node> _visitedNodes = new List<Node>();
         private List<Node> _pathToSolution = new List<Node>();
+        private string _order;
         
         public Ids()
         {
+        }
+        
+        public Ids(string order)
+        {
+            this._order = order;
         }
         
         public List<Node> IterativeDeepingSearch(Node root, int maxDepth)
@@ -19,6 +25,10 @@ namespace puzzle15
             {
                 _visitedNodes.Clear();
                 foundFittingNode = FindFittingNode(root, i);
+                if (foundFittingNode)
+                {
+                    break;
+                }
             }
             if (foundFittingNode)
             {
@@ -41,7 +51,7 @@ namespace puzzle15
             {
                 return false;
             }
-            currentNode.ExpandMove();
+            currentNode.ExpandMove(_order);
             foreach (var currentChild in currentNode.Children)
             {
                 if (!Contains(_visitedNodes, currentChild))

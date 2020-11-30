@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace puzzle15
 {
@@ -7,6 +8,22 @@ namespace puzzle15
     {
         static void Main(string[] args)
         {
+
+            void display(List<Node> solution)
+            {
+                if (solution.Count > 0)
+                {
+                    for(int i = 0; i < solution.Count; i++)
+                    {
+                        solution[i].PrintPuzzle();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No solution found");
+                }
+            }
+            
 
             //9 moves
             int[] puzzle9 =
@@ -82,28 +99,56 @@ namespace puzzle15
                 0, 13, 14, 15
             };
             
-            Node root = new Node(puzzle10);
-            Bfs bfs = new Bfs();
-            Dfs dfs = new Dfs();
-            Ids ids = new Ids();
-            Astar astar = new Astar();
-            Node rootStar = new Node(puzzle32, 0);
+            if (args.Length>0)
+            {
+                Node root = new Node(puzzle10);
+                Node rootStar = new Node(puzzle32, 0);
+                 List<Node> solution = new List<Node>();
+                switch (args[0])
+                {
+                    case "--bfs":
+                        if (args.Length > 1)
+                        {
+                            Bfs bfs = new Bfs(args[1]);
+                           solution = bfs.BreathFirstSearch(root); 
+                        }
+                        
+                        break;
+                    case "--dfs":
+                        if (args.Length > 1)
+                        {
+                            Dfs dfs = new Dfs(args[1]);
+                            solution = dfs.DepthFirstSearch(root);
+                        }
+                        
+                        break;
+                    case "--ids":
+                        if (args.Length > 1)
+                        {
+                            Ids ids = new Ids(args[1]);
+                            solution = ids.IterativeDeepingSearch(root, 11);
+                        }
+                        break;
+                    case "--astar":
+                        Astar astar = new Astar();
+                        solution = astar.AStar(root);
+                        break;
+                    default:
+                        Console.Write("No such option!");
+                        break;
+                }
+                display(solution);
+                
+                
+            }
+            
+            
 
             //List<Node> solution = bfs.BreathFirstSearch(root);
             //List<Node> solution = dfs.DepthFirstSearch(root);
              // List<Node> solution = ids.IterativeDeepingSearch(root, 15);
-            List<Node> solution = astar.AStar(rootStar);
-            if (solution.Count > 0)
-            {
-                for(int i = 0; i < solution.Count; i++)
-                {
-                    solution[i].PrintPuzzle();
-                }
-            }
-            else
-            {
-                Console.WriteLine("No solution found");
-            }
+            //List<Node> solution = astar.AStar(rootStar);
+            
         }
     }
 }

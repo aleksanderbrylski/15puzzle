@@ -117,6 +117,36 @@ namespace puzzle15
             MoveDown();
             MoveUp();
         }
+
+        public void ExpandMove(string order)
+        {
+            if (order.Length == 4)
+            {
+                foreach (char orderItem in order)
+                {
+                    if (orderItem == 'L')
+                    {
+                        MoveLeft();
+                    } else if (orderItem == 'R')
+                    {
+                        MoveRight();
+                    } else if (orderItem == 'U')
+                    {
+                        MoveUp();
+                    } else
+                    {
+                        MoveDown();
+                    }
+                }
+            }
+            else
+            {
+                MoveLeft();
+                MoveRight();
+                MoveDown();
+                MoveUp();
+            }
+        }
         
         //MOVES
         public bool MoveRight()
