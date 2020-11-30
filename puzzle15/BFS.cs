@@ -37,7 +37,6 @@ namespace puzzle15
                 {
                     if (currentChild.IsSolved())
                     {
-                        Console.WriteLine("Success ;)");
                         isSolved = true;
                         
                         //trace path to root node
@@ -73,7 +72,6 @@ namespace puzzle15
 
         private void PathTrace(List<Node> path, Node n)
         {
-            Console.WriteLine("Path: ");
             Node current = n;
             path.Add(current);
 

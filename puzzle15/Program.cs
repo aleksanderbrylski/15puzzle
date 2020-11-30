@@ -11,12 +11,30 @@ namespace puzzle15
 
             void display(List<Node> solution)
             {
+                Console.WriteLine(solution.Count - 1);
                 if (solution.Count > 0)
                 {
-                    for(int i = 0; i < solution.Count; i++)
+                    String moves = "";
+                    for(int i = 0; i < solution.Count - 1; i++)
                     {
-                        solution[i].PrintPuzzle();
+                        if (solution[i]._zeroIndex - solution[i + 1]._zeroIndex == -1)
+                        {
+                            moves += "R";
+                        }
+                        else if (solution[i]._zeroIndex - solution[i + 1]._zeroIndex == 1)
+                        {
+                            moves += "L";
+                        }
+                        else if(solution[i]._zeroIndex - solution[i + 1]._zeroIndex == -4)
+                        {
+                            moves += "D";
+                        }
+                        else
+                        { 
+                            moves += "U";
+                        }
                     }
+                    Console.WriteLine(moves);
                 }
                 else
                 {
@@ -98,11 +116,11 @@ namespace puzzle15
                 9, 10, 11, 12,
                 0, 13, 14, 15
             };
-            
+
             if (args.Length>0)
             {
-                Node root = new Node(puzzle10);
-                Node rootStar = new Node(puzzle32, 0);
+                Node root = new Node(puzzle3);
+                Node rootStar = new Node(puzzle6, 0);
                 List<Node> solution = new List<Node>();
                 switch (args[0])
                 {
@@ -146,7 +164,7 @@ namespace puzzle15
 
             //List<Node> solution = bfs.BreathFirstSearch(root);
             //List<Node> solution = dfs.DepthFirstSearch(root);
-             // List<Node> solution = ids.IterativeDeepingSearch(root, 15);
+            //List<Node> solution = ids.IterativeDeepingSearch(root, 15);
             //List<Node> solution = astar.AStar(rootStar);
             
         }

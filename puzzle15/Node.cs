@@ -6,7 +6,7 @@ namespace puzzle15
 {
     public class Node
     {
-        private readonly int _zeroIndex = 0;
+        public readonly int _zeroIndex = 0;
         private const int NumberOfColumns = 4;
 
         private bool _isInfomed = false;

@@ -22,10 +22,8 @@ namespace puzzle15
             if (foundFittingNode)
             {
                 _pathToSolution.Reverse();
-                Console.Write("The solution was found!");
                 return _pathToSolution;
             }
-            Console.Write("The solution was not found!");
             return _pathToSolution;
         }
 
