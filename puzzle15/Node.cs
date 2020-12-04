@@ -246,7 +246,7 @@ namespace puzzle15
         {
             if (_isInfomed)
             {
-                Node child = new Node(puzzleCopy, Depth);
+                Node child = new Node(puzzleCopy, Depth + 1);
                 Children.Add(child);
                 child.Parent = this;
             }
