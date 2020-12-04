@@ -153,10 +153,8 @@ namespace puzzle15
         {
             //Checks if we can move to the right
             int i = _zeroIndex;
-            //Console.Write("Zero index: "+_zeroIndex);
             if (i % NumberOfColumns >= NumberOfColumns - 1) return false;
             //Create a copy of the puzzle so as not to operate on the original puzzle
-            //Console.Write("In MoveRight");
             int[] puzzleCopy = new int [16];
             CopyPuzzle(puzzleCopy, Puzzle);
 
