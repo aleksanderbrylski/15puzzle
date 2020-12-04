@@ -17,24 +17,30 @@ namespace puzzle15
                     String moves = "";
                     for(int i = 0; i < solution.Count - 1; i++)
                     {
+              
                         if (solution[i]._zeroIndex - solution[i + 1]._zeroIndex == -1)
                         {
                             moves += "R";
+                            Console.WriteLine("R");
                         }
                         else if (solution[i]._zeroIndex - solution[i + 1]._zeroIndex == 1)
                         {
                             moves += "L";
+                            Console.WriteLine("L");
                         }
                         else if(solution[i]._zeroIndex - solution[i + 1]._zeroIndex == -4)
                         {
                             moves += "D";
+                            Console.WriteLine("D");
                         }
                         else
                         { 
                             moves += "U";
+                            Console.WriteLine("U");
                         }
+                        solution[i].PrintPuzzle();
                     }
-                    Console.WriteLine(moves);
+                    //Console.WriteLine(moves);
                 }
                 else
                 {
@@ -120,7 +126,7 @@ namespace puzzle15
             if (args.Length>0)
             {
                 Node root = new Node(puzzle3);
-                Node rootStar = new Node(puzzle6, 0);
+                Node rootStar = new Node(puzzle22, 0);
                 List<Node> solution = new List<Node>();
                 switch (args[0])
                 {
@@ -159,14 +165,6 @@ namespace puzzle15
                 
                 
             }
-            
-            
-
-            //List<Node> solution = bfs.BreathFirstSearch(root);
-            //List<Node> solution = dfs.DepthFirstSearch(root);
-            //List<Node> solution = ids.IterativeDeepingSearch(root, 15);
-            //List<Node> solution = astar.AStar(rootStar);
-            
         }
     }
 }

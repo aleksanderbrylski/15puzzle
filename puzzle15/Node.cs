@@ -85,8 +85,6 @@ namespace puzzle15
 
         public void PrintPuzzle()
         {
-            Console.WriteLine();
-
             for (int i = 0; i < NumberOfColumns; i++)
             {
                 for (int j = 0; j < NumberOfColumns; j++)
@@ -95,6 +93,7 @@ namespace puzzle15
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
         }
 
         //Check if the given puzzle is the same as object's puzzle        
